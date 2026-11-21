@@ -1505,6 +1505,18 @@ em {
     linear-gradient(to bottom, #030b1c, #071a39);
 }
 
+.contact-section h2 {
+  white-space: nowrap;
+}
+
+.contact-title__line {
+  display: inline;
+}
+
+.contact-title__line + .contact-title__line {
+  margin-left: 0.22em;
+}
+
 .contact-link {
   display: flex;
   align-items: center;
@@ -2066,6 +2078,19 @@ footer a:hover {
 
   .craft-link {
     width: 100%;
+  }
+
+  .contact-section h2 {
+    font-size: clamp(1.9rem, 9.2vw, 2.75rem);
+    white-space: normal;
+  }
+
+  .contact-title__line {
+    display: block;
+  }
+
+  .contact-title__line + .contact-title__line {
+    margin-left: 0;
   }
 
   .work-section {
