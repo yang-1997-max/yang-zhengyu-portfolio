@@ -1154,3 +1154,18 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
 });
 
 setHeroStep(0);
+
+const initialHash = window.location.hash;
+if (initialHash && initialHash !== "#home") {
+  const initialTarget = document.querySelector(initialHash);
+  if (initialTarget) {
+    window.setTimeout(() => {
+      const headerHeight = document.querySelector(".site-header")?.offsetHeight || 0;
+      const targetTop = Math.max(
+        0,
+        initialTarget.getBoundingClientRect().top + window.scrollY - headerHeight - 20,
+      );
+      window.scrollTo({ top: targetTop, behavior: "auto" });
+    }, 260);
+  }
+}
