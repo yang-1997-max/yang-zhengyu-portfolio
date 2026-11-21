@@ -560,10 +560,27 @@ const progressDots = [...document.querySelectorAll(".hero-progress__dot")];
 const introPanel = document.querySelector("#introPanel");
 const experiencePanel = document.querySelector("#experiencePanel");
 const openingCopy = document.querySelector(".hero-copy--opening");
-const workSection = document.querySelector("#work");
+const craftSection = document.querySelector("#craft");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 new WaterTrail(document.querySelector("#waterTrailCanvas"), heroSticky);
+
+if (craftSection) {
+  const revealCraft = () => craftSection.classList.add("is-visible");
+  if ("IntersectionObserver" in window) {
+    const craftObserver = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        revealCraft();
+        craftObserver.disconnect();
+      },
+      { threshold: 0.16 },
+    );
+    craftObserver.observe(craftSection);
+  } else {
+    revealCraft();
+  }
+}
 
 let heroStep = 0;
 let heroBusy = false;
@@ -577,7 +594,7 @@ const hints = [
   "再次滚动或点击，查看个人简介",
   "再次滚动或点击，切换到第三个姿态",
   "再次滚动或点击，查看项目经历",
-  "再次滚动或点击，进入作品层",
+  "再次滚动或点击，进入七年打磨",
 ];
 
 function setHeroPose(poseIndex) {
@@ -678,13 +695,13 @@ async function revealInformation(targetStep, duration = 760) {
   heroBusy = false;
 }
 
-async function enterWorkLayer() {
+async function enterCraftLayer() {
   if (heroBusy) return;
   heroBusy = true;
   setHeroStep(5);
   await wait(160);
   window.scrollTo({
-    top: workSection.offsetTop,
+    top: craftSection.offsetTop,
     behavior: reduceMotion ? "auto" : "smooth",
   });
   await wait(reduceMotion ? 100 : 1100);
@@ -721,7 +738,7 @@ async function goForward() {
   }
 
   if (heroStep === 4) {
-    await enterWorkLayer();
+    await enterCraftLayer();
   }
 }
 
