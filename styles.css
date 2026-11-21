@@ -1430,8 +1430,6 @@ em {
 
 .profile-lead {
   align-self: start;
-  position: sticky;
-  top: 8rem;
 }
 
 .profile-copy {
