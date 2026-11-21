@@ -891,7 +891,6 @@ em {
   height: 1.35rem;
 }
 
-.craft-loupe__hint,
 .craft-loupe__badge,
 .craft-loupe__zoom-label {
   position: absolute;
@@ -903,16 +902,6 @@ em {
   font: 600 0.52rem/1 var(--display);
   letter-spacing: 0.14em;
   backdrop-filter: blur(8px);
-}
-
-.craft-loupe__hint {
-  bottom: 1rem;
-  left: 1rem;
-  transition: opacity 180ms ease;
-}
-
-.craft-loupe.is-active .craft-loupe__hint {
-  opacity: 0;
 }
 
 .craft-loupe__badge {
