@@ -753,20 +753,191 @@ em {
   align-items: flex-start;
 }
 
-.craft-index__number {
-  color: transparent;
-  font: 620 clamp(8.5rem, 17vw, 18rem) / 0.72 var(--display);
-  letter-spacing: -0.11em;
-  background-image: linear-gradient(145deg, rgba(205, 245, 255, 0.92), rgba(107, 191, 255, 0.38) 58%, rgba(164, 111, 255, 0.52));
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 1px rgba(171, 229, 255, 0.36);
-  filter: drop-shadow(0 0 2.4rem rgba(87, 178, 255, 0.18));
+.craft-loupe {
+  width: min(21rem, 100%);
+  margin: 0;
+  outline: none;
+}
+
+.craft-loupe__frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 1px solid rgba(181, 220, 255, 0.25);
+  border-radius: 1.6rem;
+  background: rgba(6, 22, 49, 0.74);
+  box-shadow:
+    0 2rem 5rem rgba(0, 4, 16, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  cursor: crosshair;
+}
+
+.craft-loupe.is-active .craft-loupe__frame {
+  cursor: none;
+}
+
+.craft-loupe:focus-visible .craft-loupe__frame {
+  outline: 2px solid rgba(128, 224, 255, 0.8);
+  outline-offset: 4px;
+}
+
+.craft-loupe__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 44%;
+  transform: scale(1.015);
+  filter: saturate(0.92) brightness(0.94);
+  transition:
+    filter 360ms ease,
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.craft-loupe__frame:hover .craft-loupe__image {
+  transform: scale(1.035);
+}
+
+.craft-loupe.is-active .craft-loupe__image {
+  filter: saturate(0.82) brightness(0.76);
+}
+
+.craft-loupe__dim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+  background: rgba(0, 8, 24, 0.18);
+  transition: opacity 220ms ease;
+}
+
+.craft-loupe.is-active .craft-loupe__dim {
+  opacity: 1;
+}
+
+.craft-loupe__lens {
+  --lens-size: clamp(6.7rem, 9vw, 8.2rem);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: var(--lens-size);
+  height: var(--lens-size);
+  overflow: hidden;
+  border: 2px solid rgba(235, 250, 255, 0.84);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  background-color: #12315d;
+  background-image: url("/assets/site/craft/yang-at-work.jpg");
+  background-repeat: no-repeat;
+  box-shadow:
+    0 0 0 1px rgba(29, 87, 150, 0.32),
+    inset 0 0 1.3rem rgba(191, 234, 255, 0.18),
+    0 1.2rem 3.2rem rgba(0, 4, 16, 0.48);
+  transform: translate3d(-50%, -50%, 0) scale(0.78);
+  transition:
+    opacity 180ms ease,
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: left, top, background-position, transform;
+}
+
+.craft-loupe__lens::before {
+  position: absolute;
+  inset: 8%;
+  border-radius: inherit;
+  content: "";
+  background:
+    linear-gradient(128deg, rgba(255, 255, 255, 0.24), transparent 34%),
+    radial-gradient(circle at 68% 24%, rgba(151, 226, 255, 0.13), transparent 38%);
+  mix-blend-mode: screen;
+}
+
+.craft-loupe.is-active .craft-loupe__lens {
+  opacity: 1;
+  transform: translate3d(-50%, -50%, 0) scale(1);
+}
+
+.craft-loupe__reticle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.8rem;
+  height: 0.8rem;
+  border: 1px solid rgba(225, 249, 255, 0.65);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.craft-loupe__reticle::before,
+.craft-loupe__reticle::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  content: "";
+  background: rgba(225, 249, 255, 0.7);
+  transform: translate(-50%, -50%);
+}
+
+.craft-loupe__reticle::before {
+  width: 1.35rem;
+  height: 1px;
+}
+
+.craft-loupe__reticle::after {
+  width: 1px;
+  height: 1.35rem;
+}
+
+.craft-loupe__hint,
+.craft-loupe__badge,
+.craft-loupe__zoom-label {
+  position: absolute;
+  z-index: 2;
+  padding: 0.48rem 0.7rem;
+  border: 1px solid rgba(201, 232, 255, 0.22);
+  color: rgba(230, 245, 255, 0.78);
+  background: rgba(3, 15, 35, 0.52);
+  font: 600 0.52rem/1 var(--display);
+  letter-spacing: 0.14em;
+  backdrop-filter: blur(8px);
+}
+
+.craft-loupe__hint {
+  bottom: 1rem;
+  left: 1rem;
+  transition: opacity 180ms ease;
+}
+
+.craft-loupe.is-active .craft-loupe__hint {
+  opacity: 0;
+}
+
+.craft-loupe__badge {
+  top: 1rem;
+  right: 1rem;
+  color: var(--cyan);
+}
+
+.craft-loupe__zoom-label {
+  right: 1rem;
+  bottom: 1rem;
+  opacity: 0;
+  transform: translateY(0.35rem);
+  transition:
+    opacity 180ms ease,
+    transform 220ms ease;
+}
+
+.craft-loupe.is-active .craft-loupe__zoom-label {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .craft-index__label {
-  margin-top: 2rem;
+  margin-top: 1.45rem;
   padding-top: 1.1rem;
   border-top: 1px solid rgba(186, 221, 255, 0.22);
   color: rgba(220, 240, 255, 0.76);
@@ -1682,8 +1853,8 @@ footer a:hover {
     flex-wrap: wrap;
   }
 
-  .craft-index__number {
-    font-size: clamp(7rem, 20vw, 11rem);
+  .craft-loupe {
+    width: min(18rem, 54vw);
   }
 
   .craft-index__label {
@@ -1856,8 +2027,13 @@ footer a:hover {
     gap: 2.4rem;
   }
 
-  .craft-index__number {
-    font-size: 7.2rem;
+  .craft-index {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .craft-loupe {
+    width: min(20rem, 100%);
   }
 
   .craft-index__label {

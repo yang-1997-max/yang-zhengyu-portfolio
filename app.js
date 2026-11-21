@@ -547,6 +547,153 @@ class WaterTrail {
   }
 }
 
+class CraftLoupe {
+  constructor(root) {
+    this.root = root;
+    this.frame = root.querySelector(".craft-loupe__frame");
+    this.image = root.querySelector(".craft-loupe__image");
+    this.lens = root.querySelector(".craft-loupe__lens");
+    this.zoomLabel = root.querySelector(".craft-loupe__zoom-label");
+    this.baseZoom = 2.2;
+    this.boost = 1.35;
+    this.zoom = this.baseZoom;
+    this.active = false;
+    this.metrics = null;
+    this.target = { x: 0, y: 0 };
+    this.current = { x: 0, y: 0 };
+    this.frameId = 0;
+    this.reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    this.render = this.render.bind(this);
+    this.measure = this.measure.bind(this);
+    this.bind();
+    this.measure();
+
+    this.image.addEventListener("load", this.measure, { once: true });
+    if ("ResizeObserver" in window) {
+      this.resizeObserver = new ResizeObserver(this.measure);
+      this.resizeObserver.observe(this.frame);
+    }
+  }
+
+  measure() {
+    const rect = this.frame.getBoundingClientRect();
+    const width = rect.width || 1;
+    const height = rect.height || 1;
+    const naturalWidth = this.image.naturalWidth || 1500;
+    const naturalHeight = this.image.naturalHeight || 1125;
+    const scale = Math.max(width / naturalWidth, height / naturalHeight);
+    const baseWidth = naturalWidth * scale;
+    const baseHeight = naturalHeight * scale;
+
+    this.metrics = {
+      width,
+      height,
+      baseWidth,
+      baseHeight,
+      offsetX: (width - baseWidth) / 2,
+      offsetY: (height - baseHeight) / 2,
+    };
+  }
+
+  pointFromEvent(event) {
+    if (!this.metrics) this.measure();
+    const rect = this.frame.getBoundingClientRect();
+    const touchLift = event.pointerType === "touch" ? 72 : 0;
+    return {
+      x: clamp(event.clientX - rect.left, 0, rect.width),
+      y: clamp(event.clientY - rect.top - touchLift, 0, rect.height),
+    };
+  }
+
+  activate(x, y) {
+    if (!this.metrics) this.measure();
+    if (!this.active) {
+      this.current.x = x;
+      this.current.y = y;
+    }
+    this.active = true;
+    this.zoom = this.baseZoom;
+    this.target.x = x;
+    this.target.y = y;
+    this.root.classList.add("is-active");
+    if (!this.frameId) this.frameId = requestAnimationFrame(this.render);
+  }
+
+  deactivate() {
+    this.active = false;
+    this.zoom = this.baseZoom;
+    this.root.classList.remove("is-active");
+  }
+
+  render() {
+    this.frameId = 0;
+    if (!this.metrics) return;
+
+    const smoothing = this.reducedMotion ? 1 : 0.26;
+    this.current.x += (this.target.x - this.current.x) * smoothing;
+    this.current.y += (this.target.y - this.current.y) * smoothing;
+
+    const radius = this.lens.offsetWidth / 2;
+    const lensX = clamp(this.current.x, radius, this.metrics.width - radius);
+    const lensY = clamp(this.current.y, radius, this.metrics.height - radius);
+    const zoom = this.zoom;
+
+    this.lens.style.left = `${lensX}px`;
+    this.lens.style.top = `${lensY}px`;
+    this.lens.style.backgroundSize = `${this.metrics.baseWidth * zoom}px ${this.metrics.baseHeight * zoom}px`;
+    this.lens.style.backgroundPosition = `${
+      radius - (lensX - this.metrics.offsetX) * zoom
+    }px ${radius - (lensY - this.metrics.offsetY) * zoom}px`;
+    this.zoomLabel.textContent = `${zoom.toFixed(1)}×`;
+
+    const remaining =
+      Math.abs(this.target.x - this.current.x) + Math.abs(this.target.y - this.current.y);
+    if (this.active || remaining > 0.2) {
+      this.frameId = requestAnimationFrame(this.render);
+    }
+  }
+
+  bind() {
+    this.frame.addEventListener("pointerenter", (event) => {
+      if (event.pointerType === "touch") return;
+      const point = this.pointFromEvent(event);
+      this.activate(point.x, point.y);
+    });
+
+    this.frame.addEventListener("pointermove", (event) => {
+      if (!this.active && event.pointerType !== "touch") return;
+      const point = this.pointFromEvent(event);
+      this.activate(point.x, point.y);
+    });
+
+    this.frame.addEventListener("pointerdown", (event) => {
+      const point = this.pointFromEvent(event);
+      this.activate(point.x, point.y);
+      this.zoom = this.baseZoom * this.boost;
+    });
+
+    this.frame.addEventListener("pointerup", () => {
+      this.zoom = this.baseZoom;
+      if (window.matchMedia("(hover: none)").matches) {
+        window.setTimeout(() => this.deactivate(), 240);
+      }
+    });
+
+    this.frame.addEventListener("pointercancel", () => this.deactivate());
+    this.frame.addEventListener("pointerleave", () => {
+      if (!window.matchMedia("(hover: none)").matches) this.deactivate();
+    });
+
+    this.root.addEventListener("focus", () => {
+      if (!this.metrics) this.measure();
+      this.activate(this.metrics.width * 0.52, this.metrics.height * 0.42);
+    });
+
+    this.root.addEventListener("blur", () => this.deactivate());
+  }
+}
+
 const heroSticky = document.querySelector(".hero-sticky");
 const heroImages = [...document.querySelectorAll("#heroImages img")];
 const heroVideos = [...document.querySelectorAll(".hero-transition-video")];
@@ -564,6 +711,7 @@ const craftSection = document.querySelector("#craft");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 new WaterTrail(document.querySelector("#waterTrailCanvas"), heroSticky);
+new CraftLoupe(document.querySelector("#craftLoupe"));
 
 if (craftSection) {
   const revealCraft = () => craftSection.classList.add("is-visible");
