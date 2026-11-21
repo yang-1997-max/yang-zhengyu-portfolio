@@ -1,0 +1,165 @@
+.grainient {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  background: var(--grainient-color-0);
+  isolation: isolate;
+  --grainient-pointer-x: 0px;
+  --grainient-pointer-y: 0px;
+}
+
+.grainient__flow {
+  position: absolute;
+  inset: -15%;
+  transform: translate3d(
+    var(--grainient-pointer-x),
+    var(--grainient-pointer-y),
+    0
+  );
+  transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.grainient__field {
+  position: absolute;
+  inset: -18%;
+  background:
+    radial-gradient(
+      ellipse at 22% 30%,
+      color-mix(in srgb, var(--grainient-color-1) 74%, transparent) 0%,
+      transparent 40%
+    ),
+    radial-gradient(
+      ellipse at 74% 70%,
+      color-mix(in srgb, var(--grainient-color-2) 66%, transparent) 0%,
+      transparent 43%
+    ),
+    radial-gradient(
+      ellipse at 76% 20%,
+      color-mix(in srgb, var(--grainient-color-3) 34%, transparent) 0%,
+      transparent 28%
+    ),
+    linear-gradient(
+      var(--grainient-angle),
+      var(--grainient-color-0) 4%,
+      var(--grainient-color-0) 46%,
+      var(--grainient-color-1) 72%,
+      var(--grainient-color-2) 100%
+    );
+  filter: saturate(0.86) contrast(1.08);
+  transform-origin: 50% 50%;
+  animation: grainient-flow var(--grainient-speed) ease-in-out infinite alternate;
+}
+
+.grainient__wash {
+  position: absolute;
+  width: 72%;
+  height: 74%;
+  border-radius: 50%;
+  filter: blur(70px);
+  mix-blend-mode: screen;
+  opacity: 0.22;
+  animation: grainient-bloom var(--grainient-speed) ease-in-out infinite
+    alternate;
+}
+
+.grainient__wash--blue {
+  top: -20%;
+  right: -6%;
+  background: color-mix(in srgb, var(--grainient-color-3) 66%, #b9773b);
+  opacity: 0.16;
+}
+
+.grainient__wash--warm {
+  bottom: -24%;
+  right: 4%;
+  left: auto;
+  background: color-mix(in srgb, var(--grainient-color-2) 86%, #9b5e30);
+  opacity: 0.13;
+  animation-delay: -7s;
+}
+
+.grainient__silk {
+  position: absolute;
+  inset: -34%;
+  background:
+    repeating-linear-gradient(
+      128deg,
+      transparent 0 44px,
+      rgba(232, 183, 116, 0.065) 70px,
+      transparent 106px
+    ),
+    repeating-linear-gradient(
+      34deg,
+      transparent 0 84px,
+      rgba(8, 6, 4, 0.2) 120px,
+      transparent 174px
+    );
+  filter: blur(24px);
+  opacity: calc(var(--grainient-silk) * 0.95);
+  transform: rotate(-7deg) scale(1.12);
+  animation: grainient-silk var(--grainient-speed) ease-in-out infinite
+    alternate;
+}
+
+.grainient__grain {
+  position: absolute;
+  inset: 0;
+  opacity: var(--grainient-grain);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+.grainient__vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--grainient-color-0) 44%, transparent),
+      transparent 32%,
+      color-mix(in srgb, var(--grainient-color-0) 72%, transparent)
+    ),
+    radial-gradient(ellipse at center, transparent 40%, rgba(5, 3, 2, 0.62));
+  pointer-events: none;
+}
+
+@keyframes grainient-flow {
+  0% {
+    transform: rotate(-1.2deg) scale(1.02) translate3d(-1.5%, 0.8%, 0);
+  }
+  50% {
+    transform: rotate(0.8deg) scale(1.055) translate3d(1.8%, -1.1%, 0);
+  }
+  100% {
+    transform: rotate(1.5deg) scale(1.025) translate3d(-0.8%, 1.4%, 0);
+  }
+}
+
+@keyframes grainient-bloom {
+  from {
+    transform: translate3d(-5%, 2%, 0) scale(0.92);
+  }
+  to {
+    transform: translate3d(5%, -4%, 0) scale(1.12);
+  }
+}
+
+@keyframes grainient-silk {
+  from {
+    transform: translate3d(-2%, 1%, 0) rotate(-7deg) scale(1.12);
+  }
+  to {
+    transform: translate3d(2%, -1.5%, 0) rotate(-4deg) scale(1.16);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grainient__field,
+  .grainient__wash,
+  .grainient__silk {
+    animation: none;
+  }
+}

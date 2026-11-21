@@ -1,0 +1,16 @@
+node_modules/
+dist/
+_review/
+*.log
+/assets/
+/public/assets/*.docx
+
+# Original client footage and working libraries are not part of the website source.
+作品集/
+内部空境照片/
+回收宝项目/
+拍摄张江科学之门-双子塔/
+精修/
+项目成片/
+鹤壁拍摄/
+黄海森林拍摄/

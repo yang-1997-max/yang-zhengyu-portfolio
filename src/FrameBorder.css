@@ -1,0 +1,43 @@
+.frame-border {
+  --frame-border-x: 50%;
+  --frame-border-y: 50%;
+  --frame-border-opacity: 0;
+}
+
+.frame-border::before {
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  box-sizing: border-box;
+  padding: 1px;
+  border-radius: inherit;
+  background:
+    radial-gradient(
+      116px circle at var(--frame-border-x) var(--frame-border-y),
+      rgba(255, 248, 229, 0.98),
+      rgba(206, 164, 107, 0.88) 22%,
+      rgba(128, 105, 255, 0.55) 43%,
+      transparent 73%
+    );
+  content: "";
+  pointer-events: none;
+  opacity: var(--frame-border-opacity);
+  filter: drop-shadow(0 0 12px rgba(208, 172, 119, 0.34));
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  transition: opacity 160ms ease;
+}
+
+.capability-card.frame-border::before {
+  z-index: 4;
+}
+
+.card-spread__card.frame-border::before {
+  z-index: 6;
+}

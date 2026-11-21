@@ -1,0 +1,128 @@
+.circle-gallery {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+  perspective: 900px;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.circle-gallery.is-dragging {
+  cursor: grabbing;
+}
+
+.circle-gallery::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(510px, 95%);
+  height: 175px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse,
+    rgba(218, 210, 190, 0.1),
+    rgba(105, 92, 191, 0.035) 44%,
+    transparent 70%
+  );
+  content: "";
+  translate: -50% -50%;
+  filter: blur(8px);
+}
+
+.circle-gallery__orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 330px;
+  height: 166px;
+  border: 1px solid rgba(241, 235, 222, 0.13);
+  border-radius: 50%;
+  translate: -50% -50%;
+  transform: rotate(-3deg);
+}
+
+.circle-gallery__orbit--inner {
+  width: 255px;
+  height: 118px;
+  border-color: rgba(241, 235, 222, 0.065);
+}
+
+.circle-gallery__item {
+  position: absolute;
+  z-index: var(--orbit-index);
+  top: 50%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 66px;
+  height: 66px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: 18px;
+  opacity: var(--orbit-opacity);
+  background: rgba(241, 237, 228, 0.96);
+  box-shadow:
+    0 18px 38px rgba(0, 0, 0, 0.34),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+  transform:
+    translate(-50%, -50%)
+    translate3d(var(--orbit-x), var(--orbit-y), var(--orbit-z))
+    scale(var(--orbit-scale))
+    rotate(var(--orbit-rotation));
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  backface-visibility: visible;
+}
+
+.circle-gallery__item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.circle-gallery__center {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #e8f44e;
+  box-shadow: 0 0 18px rgba(232, 244, 78, 0.55);
+  translate: -50% -50%;
+}
+
+@media (max-width: 760px) {
+  .circle-gallery {
+    height: 205px;
+    margin-top: -6px;
+  }
+
+  .circle-gallery::before {
+    width: 100%;
+    height: 138px;
+  }
+
+  .circle-gallery__orbit {
+    width: 270px;
+    height: 142px;
+  }
+
+  .circle-gallery__orbit--inner {
+    width: 210px;
+    height: 92px;
+  }
+
+  .circle-gallery__item {
+    width: 54px;
+    height: 54px;
+    padding: 10px;
+    border-radius: 15px;
+  }
+}

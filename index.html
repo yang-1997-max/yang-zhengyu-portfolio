@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="杨正宇的个人作品集，聚焦影视后期、动态视觉、城市展馆、文旅影像与航拍项目。"
+    />
+    <meta name="theme-color" content="#06152f" />
+    <title>杨正宇｜影视后期与动态视觉</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2306152f'/%3E%3Cpath d='M14 21h9l9 13 9-13h9L36 41v10h-8V41z' fill='%23a7f1ff'/%3E%3C/svg%3E"
+    />
+    <link rel="preload" as="image" href="/assets/site/hero/pose-01.webp" />
+    <link rel="preload" as="image" href="/assets/site/hero/pose-02.webp" />
+    <link rel="preload" as="image" href="/assets/site/hero/pose-03.webp" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#work">跳到作品区</a>
+
+    <div class="page-loader" id="pageLoader" aria-live="polite">
+      <div class="loader-mark">YZY</div>
+      <div class="loader-line"><span></span></div>
+      <p>正在注入一点水感</p>
+    </div>
+
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="返回首页">
+        <span class="brand-mark">YZY</span>
+        <span class="brand-copy">YANG ZHENGYU<br />PORTFOLIO / 2026</span>
+      </a>
+      <nav class="site-nav" aria-label="主导航">
+        <a href="#work">作品</a>
+        <a href="#profile">关于</a>
+        <a href="#contact">联系</a>
+      </nav>
+      <a class="availability" href="mailto:609744197@qq.com">
+        <span></span>
+        AVAILABLE FOR PROJECTS
+      </a>
+    </header>
+
+    <main>
+      <section class="hero-scroll" id="home" aria-label="个人介绍">
+        <div class="hero-sticky" data-step="0">
+          <div class="hero-media" aria-hidden="true">
+            <div class="hero-images" id="heroImages">
+              <img class="is-active" data-pose="0" src="/assets/site/hero/pose-01.webp" alt="" />
+              <img data-pose="1" src="/assets/site/hero/pose-02.webp" alt="" />
+              <img data-pose="2" src="/assets/site/hero/pose-03.webp" alt="" />
+            </div>
+            <video
+              class="hero-transition-video"
+              id="heroTransitionFirst"
+              muted
+              playsinline
+              preload="auto"
+              poster="/assets/site/hero/pose-01.webp"
+              src="/assets/site/transitions/pose-01-to-02-60.mp4"
+              aria-hidden="true"
+            ></video>
+            <video
+              class="hero-transition-video"
+              id="heroTransitionSecond"
+              muted
+              playsinline
+              preload="auto"
+              poster="/assets/site/hero/pose-02.webp"
+              src="/assets/site/transitions/pose-02-to-03-60.mp4"
+              aria-hidden="true"
+            ></video>
+            <canvas id="waterTrailCanvas" aria-hidden="true"></canvas>
+            <div class="hero-color-wash"></div>
+            <div class="hero-beam"></div>
+            <div class="hero-vignette"></div>
+          </div>
+
+          <div class="hero-copy hero-copy--opening">
+            <p class="eyebrow">POST-PRODUCTION / MOTION / AERIAL</p>
+            <p class="opening-line">
+              把画面剪成节奏，<br />
+              让信息拥有<em>触感。</em>
+            </p>
+          </div>
+
+          <aside class="intro-panel" id="introPanel" aria-label="个人简介">
+            <p class="panel-index">01 / ABOUT</p>
+            <p class="panel-kicker">杨正宇 · 影视后期</p>
+            <h1>
+              七年打磨，
+              <br />
+              让每一帧都
+              <em>有情绪。</em>
+            </h1>
+            <p class="panel-body">
+              从文案分镜到剪辑、调色、动效与声音，我习惯把复杂信息整理成清楚、有张力的视觉叙事。也参与前期拍摄与无人机航拍，让后期判断更贴近现场。
+            </p>
+            <div class="panel-facts">
+              <span>上海</span>
+              <span>7+ YEARS</span>
+              <span>POST-PRODUCTION</span>
+            </div>
+            <a class="text-link" href="#profile">
+              查看完整经历
+              <span aria-hidden="true">↘</span>
+            </a>
+          </aside>
+
+          <aside class="experience-panel" id="experiencePanel" aria-label="项目经历">
+            <p class="panel-index">02 / EXPERIENCE</p>
+            <h2>
+              从真实拍摄，
+              <br />
+              走到最终<em>成片。</em>
+            </h2>
+            <div class="experience-list">
+              <article>
+                <span class="experience-date">2022.02 — 2026.11</span>
+                <h3>上海德健文化创意有限公司</h3>
+                <p>影视后期 / 动态视觉 / 航拍</p>
+              </article>
+              <article>
+                <span class="experience-date">2019.09 — 2021.12</span>
+                <h3>安徽猫眼文传媒有限公司</h3>
+                <p>视频剪辑 / 样片审核 / 客户项目</p>
+              </article>
+            </div>
+            <div class="skill-row" aria-label="常用软件">
+              <span>PR</span><span>AE</span><span>DaVinci</span><span>PS</span><span>AI</span><span>AU</span>
+            </div>
+          </aside>
+
+          <div class="hero-side-meta" aria-hidden="true">
+            <span>SCROLL / MOVE</span>
+            <div class="hero-progress">
+              <button type="button" class="hero-progress__dot is-active" data-step="0" aria-label="回到第一个姿态"></button>
+              <button type="button" class="hero-progress__dot" data-step="1" aria-label="切换到第二个姿态"></button>
+              <button type="button" class="hero-progress__dot" data-step="2" aria-label="显示个人简介"></button>
+              <button type="button" class="hero-progress__dot" data-step="3" aria-label="切换到第三个姿态"></button>
+              <button type="button" class="hero-progress__dot" data-step="4" aria-label="显示项目经历"></button>
+            </div>
+            <span id="heroStageLabel">00 / 05</span>
+          </div>
+
+          <div class="hero-bottom-meta" aria-hidden="true">
+            <span>YANG ZHENGYU</span>
+            <span>EDIT · COLOR · MOTION · STORY</span>
+            <span>SHANGHAI / CN</span>
+          </div>
+
+          <div class="hero-scroll-cue" aria-hidden="true">
+            <span class="scroll-cue-line"></span>
+            <span id="heroHint">一次滚动或点击，进入下一幕</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="work-section" id="work">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">SELECTED WORK / 2026</p>
+            <h2 class="gradient-text">
+              让作品<br />
+              自己说话。
+            </h2>
+          </div>
+          <p class="section-note">
+            六组城市、人文与品牌影像以色彩矩阵展开。移动指针唤醒画面，点击进入独立浏览。
+          </p>
+        </div>
+        <div
+          class="chroma-grid"
+          id="projectGrid"
+          data-columns="3"
+          data-radius="260"
+          aria-label="精选作品色彩网格"
+        >
+          <div class="chroma-grid__field" id="projectGridField"></div>
+          <div class="chroma-grid__caption" aria-hidden="true">
+            <span>CHROMA FIELD / 3 COLUMNS</span>
+            <span>MOVE TO REVEAL</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="profile-section" id="profile">
+        <div class="profile-lead">
+          <p class="eyebrow">PROFILE / 03</p>
+          <h2 class="gradient-text">
+            懂剪辑，也懂<br />
+            镜头是怎样<em>发生的。</em>
+          </h2>
+        </div>
+        <div class="profile-copy">
+          <p>
+            2019 年入行，长期参与城市展厅、文旅宣传片、品牌影像与航拍项目。能够独立完成视频剪辑、调色、字幕、配音、音效、AE 动态效果、片头片尾和特效包装，也能在项目前期完成拍摄与无人机飞手工作。
+          </p>
+          <p>
+            我相信后期不是把素材拼起来，而是找出画面与信息之间最准确的节奏。
+          </p>
+        </div>
+        <div class="capability-grid">
+          <article>
+            <span>01</span>
+            <h3>叙事剪辑</h3>
+            <p>镜头筛选、结构重组、节奏控制与版本迭代。</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>视觉包装</h3>
+            <p>AE 动效、信息可视化、片头片尾与展陈包装。</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>画面统一</h3>
+            <p>调色、字幕、声音与最终交付质量把控。</p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>现场判断</h3>
+            <p>前期拍摄、航拍与客户对接，让内容更完整。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="contact-section" id="contact">
+        <p class="eyebrow">LET'S MAKE SOMETHING MOVE</p>
+        <h2 class="gradient-text">
+          有下一段故事，<br />
+          一起把它<em>剪出来。</em>
+        </h2>
+        <a class="contact-link" href="mailto:609744197@qq.com">
+          <span>609744197@qq.com</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+        <footer>
+          <span>杨正宇 · 影视后期 / 动态视觉</span>
+          <a href="#home">回到水面 ↑</a>
+          <span>© 2026</span>
+        </footer>
+      </section>
+    </main>
+
+    <dialog class="project-dialog" id="projectDialog" aria-labelledby="projectDialogTitle">
+      <div class="dialog-shell">
+        <header class="dialog-header">
+          <span class="dialog-header__label">PROJECT VIEW</span>
+          <button class="dialog-close" id="dialogClose" type="button" aria-label="关闭作品窗口">
+            <span></span><span></span>
+          </button>
+        </header>
+        <div class="dialog-scroll" id="dialogScroll">
+          <div class="dialog-media">
+            <video id="projectVideo" controls playsinline preload="metadata"></video>
+            <div class="dialog-media__wash"></div>
+          </div>
+          <article class="dialog-content">
+            <div class="dialog-title-row">
+              <div>
+                <p class="eyebrow" id="projectCategory"></p>
+                <h2 class="gradient-text" id="projectDialogTitle"></h2>
+              </div>
+              <span class="dialog-year" id="projectYear"></span>
+            </div>
+            <p class="dialog-description" id="projectDescription"></p>
+            <div class="dialog-details">
+              <div>
+                <span>ROLE</span>
+                <p id="projectRole"></p>
+              </div>
+              <div>
+                <span>TOOLS</span>
+                <p id="projectTools"></p>
+              </div>
+              <div>
+                <span>DELIVERY</span>
+                <p id="projectDelivery"></p>
+              </div>
+            </div>
+            <div class="dialog-image-wrap">
+              <img id="projectStill" alt="" />
+              <span>PROJECT FRAME / 01</span>
+            </div>
+            <div class="dialog-next">
+              <span>继续浏览</span>
+              <div>
+                <button type="button" id="projectPrev">← 上一件</button>
+                <button type="button" id="projectNext">下一件 →</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </dialog>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
