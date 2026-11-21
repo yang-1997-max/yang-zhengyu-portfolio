@@ -591,9 +591,9 @@ let wheelEndTimer = 0;
 
 const hints = [
   "一次滚动或点击，进入下一幕",
-  "再次滚动或点击，查看个人简介",
-  "再次滚动或点击，切换到第三个姿态",
-  "再次滚动或点击，查看项目经历",
+  "人物动效完成，正在显示个人简介",
+  "再次滚动或点击，切换到第三个人物",
+  "人物动效完成，正在显示项目经历",
   "再次滚动或点击，进入七年打磨",
 ];
 
@@ -716,6 +716,9 @@ async function goForward() {
       targetStep: 1,
       endPose: 1,
     });
+    if (heroStep === 1 && !heroBusy) {
+      await revealInformation(2);
+    }
     return;
   }
 
@@ -729,6 +732,9 @@ async function goForward() {
       targetStep: 3,
       endPose: 2,
     });
+    if (heroStep === 3 && !heroBusy) {
+      await revealInformation(4);
+    }
     return;
   }
 
