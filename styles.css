@@ -1157,6 +1157,10 @@ em {
   letter-spacing: -0.07em;
 }
 
+.section-heading h2 {
+  white-space: nowrap;
+}
+
 .section-note {
   width: min(20rem, 30vw);
   margin: 0;
