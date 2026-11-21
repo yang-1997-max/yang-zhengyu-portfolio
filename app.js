@@ -558,7 +558,6 @@ const heroStageLabel = document.querySelector("#heroStageLabel");
 const heroHint = document.querySelector("#heroHint");
 const progressDots = [...document.querySelectorAll(".hero-progress__dot")];
 const introPanel = document.querySelector("#introPanel");
-const experiencePanel = document.querySelector("#experiencePanel");
 const openingCopy = document.querySelector(".hero-copy--opening");
 const craftSection = document.querySelector("#craft");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -593,8 +592,7 @@ const hints = [
   "一次滚动或点击，进入下一幕",
   "再次滚动或点击，查看个人简介",
   "再次滚动或点击，切换到第三个姿态",
-  "再次滚动或点击，查看项目经历",
-  "再次滚动或点击，进入七年打磨",
+  "第三幕完成，正在进入七年打磨",
 ];
 
 function setHeroPose(poseIndex) {
@@ -606,11 +604,10 @@ function setHeroPose(poseIndex) {
 function setHeroStep(step) {
   heroStep = step;
   heroSticky.dataset.step = String(step);
-  heroStageLabel.textContent = `${String(step).padStart(2, "0")} / 05`;
+  heroStageLabel.textContent = `${String(step).padStart(2, "0")} / 04`;
   openingCopy.setAttribute("aria-hidden", step === 0 ? "false" : "true");
   introPanel.setAttribute("aria-hidden", step === 2 ? "false" : "true");
-  experiencePanel.setAttribute("aria-hidden", step === 4 ? "false" : "true");
-  progressDots.forEach((dot, index) => dot.classList.toggle("is-active", index === Math.min(step, 4)));
+  progressDots.forEach((dot, index) => dot.classList.toggle("is-active", index === Math.min(step, 3)));
   heroHint.textContent = hints[Math.min(step, hints.length - 1)];
 }
 
@@ -698,7 +695,7 @@ async function revealInformation(targetStep, duration = 760) {
 async function enterCraftLayer() {
   if (heroBusy) return;
   heroBusy = true;
-  setHeroStep(5);
+  setHeroStep(4);
   await wait(160);
   window.scrollTo({
     top: craftSection.offsetTop,
@@ -729,15 +726,13 @@ async function goForward() {
       targetStep: 3,
       endPose: 2,
     });
+    if (heroStep === 3 && !heroBusy) {
+      await enterCraftLayer();
+    }
     return;
   }
 
   if (heroStep === 3) {
-    await revealInformation(4);
-    return;
-  }
-
-  if (heroStep === 4) {
     await enterCraftLayer();
   }
 }
@@ -746,11 +741,6 @@ function goBackward() {
   if (heroBusy) return;
   if (heroStep <= 0) return;
 
-  if (heroStep === 4) {
-    setHeroStep(3);
-    setHeroPose(2);
-    return;
-  }
   if (heroStep === 3) {
     setHeroStep(2);
     setHeroPose(1);
@@ -779,7 +769,7 @@ function resetHero() {
 }
 
 function isHeroInteractionActive() {
-  return window.scrollY <= 2 && heroStep < 5;
+  return window.scrollY <= 2 && heroStep < 4;
 }
 
 window.addEventListener(
@@ -887,7 +877,7 @@ window.addEventListener(
 window.addEventListener(
   "scroll",
   () => {
-    if (window.scrollY <= 1 && heroStep === 5 && !heroBusy) {
+    if (window.scrollY <= 1 && heroStep === 4 && !heroBusy) {
       window.setTimeout(() => {
         if (window.scrollY <= 1 && !heroBusy) {
           setHeroPose(0);
