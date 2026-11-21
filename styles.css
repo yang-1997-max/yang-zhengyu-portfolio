@@ -1448,6 +1448,20 @@ em {
   color: #fff;
 }
 
+@media (min-width: 901px) {
+  .profile-lead {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    text-align: right;
+  }
+
+  .profile-copy {
+    grid-column: 1;
+    grid-row: 1;
+  }
+}
+
 .capability-grid {
   grid-column: 1 / -1;
   display: grid;
