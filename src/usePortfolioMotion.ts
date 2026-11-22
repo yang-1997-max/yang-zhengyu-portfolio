@@ -286,6 +286,11 @@ export function usePortfolioMotion({ rootRef }: PortfolioMotionOptions) {
         );
       }
 
+      if (window.matchMedia("(max-width: 767px)").matches) {
+        ScrollTrigger.refresh();
+        return;
+      }
+
       const marqueeSection = root.querySelector<HTMLElement>(
         "[data-marquee-section]",
       );
