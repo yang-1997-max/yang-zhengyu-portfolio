@@ -25,6 +25,7 @@ type DriftWallProps = {
   dim?: number;
   overlayColor?: string;
   className?: string;
+  pauseWhileScrolling?: boolean;
 };
 
 function colorWithAlpha(hex: string, alpha: number) {
@@ -58,6 +59,7 @@ export default function DriftWall({
   dim = 0.55,
   overlayColor = "#060010",
   className = "",
+  pauseWhileScrolling = true,
 }: DriftWallProps) {
   const wallRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -78,6 +80,38 @@ export default function DriftWall({
     window.addEventListener("pointermove", move, { passive: true });
     return () => window.removeEventListener("pointermove", move);
   }, [parallax]);
+
+  useEffect(() => {
+    const wall = wallRef.current;
+    if (!wall || !pauseWhileScrolling) return;
+
+    let resumeTimer = 0;
+    let resumeFrame = 0;
+
+    const pauseTracks = () => {
+      const bounds = wall.getBoundingClientRect();
+      if (bounds.bottom <= 0 || bounds.top >= window.innerHeight) return;
+
+      wall.classList.add("drift-wall--scroll-paused");
+      window.clearTimeout(resumeTimer);
+      resumeTimer = window.setTimeout(() => {
+        resumeFrame = window.requestAnimationFrame(() => {
+          wall.classList.remove("drift-wall--scroll-paused");
+        });
+      }, 160);
+    };
+
+    window.addEventListener("wheel", pauseTracks, { passive: true });
+    window.addEventListener("scroll", pauseTracks, { passive: true });
+
+    return () => {
+      window.clearTimeout(resumeTimer);
+      window.cancelAnimationFrame(resumeFrame);
+      window.removeEventListener("wheel", pauseTracks);
+      window.removeEventListener("scroll", pauseTracks);
+      wall.classList.remove("drift-wall--scroll-paused");
+    };
+  }, [pauseWhileScrolling]);
 
   const columnItems = Array.from({ length: columns }, (_, columnIndex) => {
     const base = items.filter(

@@ -509,6 +509,10 @@ img {
   animation-name: driftWallDown;
 }
 
+.drift-wall--scroll-paused .drift-wall__track {
+  animation-play-state: paused;
+}
+
 .drift-wall__tile {
   position: relative;
   flex: none;
