@@ -10,8 +10,7 @@ type PortfolioMotionOptions = {
 
 const hiddenClip = "inset(0% 0% 100% 0%)";
 const visibleClip = "inset(0% 0% 0% 0%)";
-const introStorageKey = "yzy-portfolio-intro-seen-at";
-const introCooldownMs = 6 * 60 * 60 * 1000;
+const introStorageKey = "yzy-portfolio-intro-played";
 
 function readNumber(element: HTMLElement, name: string, fallback: number) {
   const value = Number.parseFloat(element.dataset[name] ?? "");
@@ -69,18 +68,13 @@ export function usePortfolioMotion({ rootRef }: PortfolioMotionOptions) {
 
       const deepLink =
         Boolean(window.location.hash) && window.location.hash !== "#home";
-      let introRecentlyPlayed = false;
+      let introAlreadyPlayed = false;
 
       try {
-        const lastPlayedAt = Number.parseInt(
-          window.localStorage.getItem(introStorageKey) ?? "",
-          10,
-        );
-        introRecentlyPlayed =
-          Number.isFinite(lastPlayedAt) &&
-          Date.now() - lastPlayedAt < introCooldownMs;
+        introAlreadyPlayed =
+          window.localStorage.getItem(introStorageKey) === "true";
       } catch {
-        introRecentlyPlayed = false;
+        introAlreadyPlayed = false;
       }
 
       gsap.set(
@@ -103,10 +97,10 @@ export function usePortfolioMotion({ rootRef }: PortfolioMotionOptions) {
         heroCopy &&
         heroLines.length > 0 &&
         !deepLink &&
-        !introRecentlyPlayed
+        !introAlreadyPlayed
       ) {
         try {
-          window.localStorage.setItem(introStorageKey, String(Date.now()));
+          window.localStorage.setItem(introStorageKey, "true");
         } catch {
           // Storage may be unavailable in strict privacy modes.
         }
