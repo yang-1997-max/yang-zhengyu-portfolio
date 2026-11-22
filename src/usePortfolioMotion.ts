@@ -10,7 +10,6 @@ type PortfolioMotionOptions = {
 
 const hiddenClip = "inset(0% 0% 100% 0%)";
 const visibleClip = "inset(0% 0% 0% 0%)";
-const introStorageKey = "yzy-portfolio-intro-played";
 
 function readNumber(element: HTMLElement, name: string, fallback: number) {
   const value = Number.parseFloat(element.dataset[name] ?? "");
@@ -68,14 +67,6 @@ export function usePortfolioMotion({ rootRef }: PortfolioMotionOptions) {
 
       const deepLink =
         Boolean(window.location.hash) && window.location.hash !== "#home";
-      let introAlreadyPlayed = false;
-
-      try {
-        introAlreadyPlayed =
-          window.localStorage.getItem(introStorageKey) === "true";
-      } catch {
-        introAlreadyPlayed = false;
-      }
 
       gsap.set(
         [
@@ -96,14 +87,8 @@ export function usePortfolioMotion({ rootRef }: PortfolioMotionOptions) {
         heroPortrait &&
         heroCopy &&
         heroLines.length > 0 &&
-        !deepLink &&
-        !introAlreadyPlayed
+        !deepLink
       ) {
-        try {
-          window.localStorage.setItem(introStorageKey, "true");
-        } catch {
-          // Storage may be unavailable in strict privacy modes.
-        }
         document.body.style.overflow = "hidden";
         gsap.set(opening, { display: "flex" });
         gsap.set("[data-opening-meta]", { autoAlpha: 0, y: 18 });
