@@ -424,17 +424,19 @@ function HeroSection() {
         <h1
           id="hero-title"
           aria-label="Hi, I’m Yangzhengyu"
-          className="hero-heading w-full whitespace-nowrap text-center text-[12vw] font-black uppercase leading-none tracking-tight sm:text-[12.7vw] md:text-[13vw] lg:text-[13vw]"
+          translate="no"
+          className="w-full whitespace-nowrap text-center text-[12vw] font-black uppercase leading-none tracking-tight text-[#BBCCD7] sm:text-[12.7vw] md:text-[13vw] lg:text-[13vw]"
         >
           <span className="block" data-hero-line>
-            Hi, I’m
+            <span className="hero-name-gradient">Hi, I’m</span>
           </span>
           <span className="block" data-hero-line>
             <span className="hero-name-letter--cyan">Y</span>
-            ANG
+            <span className="hero-name-gradient">ANG</span>
             <span className="hero-name-letter--violet">Z</span>
-            HENG
-            <span className="hero-name-letter--blue">Y</span>U
+            <span className="hero-name-gradient">HENG</span>
+            <span className="hero-name-letter--blue">Y</span>
+            <span className="hero-name-gradient">U</span>
           </span>
         </h1>
       </FadeIn>

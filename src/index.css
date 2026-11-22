@@ -82,6 +82,19 @@ img {
   -webkit-text-fill-color: #8feaff;
 }
 
+.hero-name-gradient {
+  color: #bbccd7;
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .hero-name-gradient {
+    background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
 .hero-name-letter--violet {
   color: #b8a2ff;
   -webkit-text-fill-color: #b8a2ff;
