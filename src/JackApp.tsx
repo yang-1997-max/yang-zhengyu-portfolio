@@ -966,6 +966,8 @@ function ShowreelGallery({
   videos: NonNullable<Project["videos"]>;
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [audioEnabled, setAudioEnabled] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const activeVideo = videos[activeIndex];
   const playlistItems = useMemo(
     () =>
@@ -978,6 +980,24 @@ function ShowreelGallery({
       })),
     [videos],
   );
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = !audioEnabled;
+    const startPlayback = () => {
+      video.muted = !audioEnabled;
+      void video.play().catch(() => undefined);
+    };
+
+    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+      startPlayback();
+    } else {
+      video.addEventListener("loadeddata", startPlayback, { once: true });
+      return () => video.removeEventListener("loadeddata", startPlayback);
+    }
+  }, [activeIndex, audioEnabled]);
 
   return (
     <div className="stagger-item grid gap-3 sm:gap-4 md:grid-cols-[220px_minmax(0,1fr)] lg:grid-cols-[250px_minmax(0,1fr)]">
@@ -996,15 +1016,22 @@ function ShowreelGallery({
       >
         <video
           key={activeVideo.src}
+          ref={videoRef}
           id="showreel-player"
           src={activeVideo.src}
           poster={activeVideo.poster}
           controls
-          muted
+          muted={!audioEnabled}
           autoPlay
           loop
           playsInline
           preload="metadata"
+          onVolumeChange={(event) => {
+            const enabled = !event.currentTarget.muted;
+            setAudioEnabled((current) =>
+              current === enabled ? current : enabled,
+            );
+          }}
           aria-label={`${activeVideo.name}成片节选`}
           className="aspect-video h-full w-full bg-black object-contain"
         />
