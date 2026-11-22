@@ -2,6 +2,7 @@ node_modules/
 dist/
 _review/
 *.log
+*.tsbuildinfo
 /assets/
 /public/assets/*.docx
 
