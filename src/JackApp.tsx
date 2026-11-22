@@ -17,7 +17,6 @@ import {
 import AnimatedList from "./AnimatedList";
 import DriftWall from "./DriftWall";
 import type { PhotoGridItem } from "./PhotoGrid";
-import SpecularButton from "./SpecularButton";
 import SplitText from "./SplitText";
 import { usePortfolioMotion } from "./usePortfolioMotion";
 
@@ -308,36 +307,6 @@ function FadeIn({
   );
 }
 
-type ContactButtonProps = {
-  className?: string;
-};
-
-function ContactButton({ className = "" }: ContactButtonProps) {
-  return (
-    <SpecularButton
-      href="#projects"
-      size="lg"
-      radius={999}
-      tint="#ffffff"
-      tintOpacity={0.04}
-      textColor="#f5f5f5"
-      lineColor="#ffffff"
-      baseColor="#525252"
-      intensity={1}
-      idleIntensity={0.35}
-      shineSize={10}
-      shineFade={34}
-      thickness={1.2}
-      glow={1}
-      followMouse
-      proximity={250}
-      className={className}
-    >
-      项目案例
-    </SpecularButton>
-  );
-}
-
 type MagnetProps = {
   children: ReactNode;
   className?: string;
@@ -505,9 +474,6 @@ function HeroSection() {
           </p>
         </FadeIn>
 
-        <FadeIn delay={0.5} y={20} className="hero-intro-action">
-          <ContactButton />
-        </FadeIn>
       </div>
     </section>
   );
@@ -865,7 +831,6 @@ function AboutSection() {
             <AnimatedText text="2019 年入行，长期参与城市展厅、文旅宣传片、品牌影像与航拍项目。能够独立完成视频剪辑、调色、字幕、配音、音效、AE 动态效果、片头片尾和特效包装，也能在项目前期完成拍摄与无人机飞手工作。" />
             <AnimatedText text="我相信后期不是把素材拼起来，而是找出画面与信息之间最准确的节奏。" />
           </div>
-          <ContactButton />
         </div>
       </div>
     </section>
@@ -926,37 +891,6 @@ function ExperienceSection() {
         </div>
       </div>
     </section>
-  );
-}
-
-function LiveProjectButton({
-  label = "Live Project",
-  href = "#projects",
-}: {
-  label?: string;
-  href?: string;
-}) {
-  return (
-    <SpecularButton
-      href={href}
-      size="md"
-      radius={999}
-      tint="#ffffff"
-      tintOpacity={0.035}
-      textColor="#D7E2EA"
-      lineColor="#D7E2EA"
-      baseColor="#34383b"
-      intensity={0.92}
-      idleIntensity={0.28}
-      shineSize={9}
-      shineFade={30}
-      thickness={1.2}
-      glow={0.9}
-      followMouse
-      proximity={220}
-    >
-      {label}
-    </SpecularButton>
   );
 }
 
@@ -1100,10 +1034,6 @@ function ProjectCard({
               </h3>
             </div>
           </div>
-          <LiveProjectButton
-            label={project.videos ? "立即播放" : "Live Project"}
-            href={project.videos ? "#showreel-player" : "#projects"}
-          />
         </div>
 
         {project.videos ? (

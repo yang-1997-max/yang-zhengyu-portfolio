@@ -40,9 +40,6 @@ export function usePortfolioMotion({ rootRef }: PortfolioMotionOptions) {
         ".hero-intro-portrait",
       );
       const heroCopy = hero?.querySelector<HTMLElement>(".hero-intro-copy");
-      const heroAction = hero?.querySelector<HTMLElement>(
-        ".hero-intro-action",
-      );
 
       if (reducedMotion) {
         gsap.set(opening, { display: "none" });
@@ -53,7 +50,6 @@ export function usePortfolioMotion({ rootRef }: PortfolioMotionOptions) {
             ...heroLines,
             heroPortrait,
             heroCopy,
-            heroAction,
             ...gsap.utils.toArray<HTMLElement>(
               "[data-reveal], .heading-reveal, .stagger-item, .section-kicker, .section-ghost",
               root,
@@ -79,7 +75,6 @@ export function usePortfolioMotion({ rootRef }: PortfolioMotionOptions) {
           ...heroLines,
           heroPortrait,
           heroCopy,
-          heroAction,
         ].filter(Boolean),
         { visibility: "visible" },
       );
@@ -91,7 +86,6 @@ export function usePortfolioMotion({ rootRef }: PortfolioMotionOptions) {
         heroTitle &&
         heroPortrait &&
         heroCopy &&
-        heroAction &&
         heroLines.length > 0 &&
         !deepLink
       ) {
@@ -127,7 +121,7 @@ export function usePortfolioMotion({ rootRef }: PortfolioMotionOptions) {
           y: 72,
           scale: 0.94,
         });
-        gsap.set([heroCopy, heroAction].filter(Boolean), {
+        gsap.set(heroCopy, {
           autoAlpha: 0,
           y: 30,
           clipPath: hiddenClip,
@@ -137,7 +131,7 @@ export function usePortfolioMotion({ rootRef }: PortfolioMotionOptions) {
           defaults: { ease: "expo.out" },
           onComplete: () => {
             gsap.set(
-              [heroTitle, heroPortrait, heroCopy, heroAction].filter(Boolean),
+              [heroTitle, heroPortrait, heroCopy].filter(Boolean),
               {
                 clearProps: "transform,clipPath,visibility,opacity",
               },
@@ -248,17 +242,6 @@ export function usePortfolioMotion({ rootRef }: PortfolioMotionOptions) {
               ease: "power4.out",
             },
             1.76,
-          )
-          .to(
-            heroAction,
-            {
-              autoAlpha: 1,
-              y: 0,
-              clipPath: visibleClip,
-              duration: 1.15,
-              ease: "power4.out",
-            },
-            1.98,
           );
       } else if (opening) {
         gsap.set(opening, { display: "none" });
@@ -269,7 +252,6 @@ export function usePortfolioMotion({ rootRef }: PortfolioMotionOptions) {
             ...heroLines,
             heroPortrait,
             heroCopy,
-            heroAction,
           ].filter(Boolean),
           {
             autoAlpha: 1,
