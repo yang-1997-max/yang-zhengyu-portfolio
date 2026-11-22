@@ -573,7 +573,7 @@ function MarqueeSection() {
     >
       {isMobile ? (
         <div className="space-y-3">
-          <p className="px-5 text-[0.56rem] font-medium uppercase tracking-[0.2em] text-[#D7E2EA]/40">
+          <p className="px-5 text-[0.72rem] font-medium tracking-[0.16em] text-[#D7E2EA]/65">
             左右滑动浏览作品画面
           </p>
           <MobileMarqueeRow images={firstRow} />
@@ -944,31 +944,33 @@ function ShowreelGallery({
         className="order-2 md:order-1 md:max-h-[416px]"
       />
 
-      <div
-        className="order-1 overflow-hidden rounded-[28px] border border-white/10 bg-black sm:rounded-[38px] md:order-2"
-        data-media-reveal
-      >
-        <video
-          key={activeVideo.src}
-          ref={videoRef}
-          id="showreel-player"
-          src={activeVideo.src}
-          poster={activeVideo.poster}
-          controls
-          muted={!audioEnabled}
-          autoPlay
-          loop
-          playsInline
-          preload="metadata"
-          onVolumeChange={(event) => {
-            const enabled = !event.currentTarget.muted;
-            setAudioEnabled((current) =>
-              current === enabled ? current : enabled,
-            );
-          }}
-          aria-label={`${activeVideo.name}成片节选`}
-          className="aspect-video h-full w-full bg-black object-contain"
-        />
+      <div className="order-1 md:order-2" data-media-reveal>
+        <div className="overflow-hidden rounded-[28px] border border-white/10 bg-black sm:rounded-[38px]">
+          <video
+            key={activeVideo.src}
+            ref={videoRef}
+            id="showreel-player"
+            src={activeVideo.src}
+            poster={activeVideo.poster}
+            controls
+            muted={!audioEnabled}
+            autoPlay
+            loop
+            playsInline
+            preload="metadata"
+            onVolumeChange={(event) => {
+              const enabled = !event.currentTarget.muted;
+              setAudioEnabled((current) =>
+                current === enabled ? current : enabled,
+              );
+            }}
+            aria-label={`${activeVideo.name}成片节选`}
+            className="aspect-video h-full w-full bg-black object-contain"
+          />
+        </div>
+        <p className="mt-2 text-center text-[0.68rem] font-light tracking-[0.08em] text-[#D7E2EA]/55 sm:text-[0.74rem]">
+          滑动选择作品，点击即可播放
+        </p>
       </div>
     </div>
   );
