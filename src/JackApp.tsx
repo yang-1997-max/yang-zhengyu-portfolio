@@ -23,6 +23,22 @@ import { usePortfolioMotion } from "./usePortfolioMotion";
 
 const MIST = "#D7E2EA";
 
+function useMediaQuery(query: string) {
+  const [matches, setMatches] = useState(
+    () => window.matchMedia(query).matches,
+  );
+
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    const update = () => setMatches(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, [query]);
+
+  return matches;
+}
+
 const navItems = [
   { label: "关于", href: "#about" },
   { label: "经历", href: "#experience" },
@@ -555,8 +571,11 @@ function FloatingNavigation() {
 function MarqueeSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const [scrollOffset, setScrollOffset] = useState(0);
+  const isMobile = useMediaQuery("(max-width: 639px)");
 
   useEffect(() => {
+    if (isMobile) return;
+
     const updateOffset = () => {
       const section = sectionRef.current;
       if (!section) return;
@@ -574,7 +593,7 @@ function MarqueeSection() {
       window.removeEventListener("scroll", updateOffset);
       window.removeEventListener("resize", updateOffset);
     };
-  }, []);
+  }, [isMobile]);
 
   const firstRow = marqueeImages.slice(0, 11);
   const secondRow = marqueeImages.slice(11);
@@ -586,11 +605,42 @@ function MarqueeSection() {
       aria-label="Motion design previews"
       data-marquee-section
     >
-      <div className="flex flex-col gap-3">
-        <MarqueeRow images={firstRow} translation={scrollOffset - 200} />
-        <MarqueeRow images={secondRow} translation={-(scrollOffset - 200)} />
-      </div>
+      {isMobile ? (
+        <div className="space-y-3">
+          <p className="px-5 text-[0.56rem] font-medium uppercase tracking-[0.2em] text-[#D7E2EA]/40">
+            左右滑动浏览作品画面
+          </p>
+          <MobileMarqueeRow images={firstRow} />
+          <MobileMarqueeRow images={secondRow} />
+        </div>
+      ) : (
+        <div className="flex flex-col gap-3">
+          <MarqueeRow images={firstRow} translation={scrollOffset - 200} />
+          <MarqueeRow images={secondRow} translation={-(scrollOffset - 200)} />
+        </div>
+      )}
     </section>
+  );
+}
+
+function MobileMarqueeRow({ images }: { images: string[] }) {
+  return (
+    <div
+      className="marquee-mobile-row"
+      role="region"
+      aria-label="作品画面，可左右滑动浏览"
+      tabIndex={0}
+    >
+      {images.map((src) => (
+        <img
+          key={src}
+          src={src}
+          alt=""
+          loading="lazy"
+          className="marquee-mobile-card"
+        />
+      ))}
+    </div>
   );
 }
 
@@ -973,6 +1023,7 @@ function ProjectCard({
   totalCards: number;
 }) {
   const cardWrapRef = useRef<HTMLDivElement>(null);
+  const isMobile = useMediaQuery("(max-width: 767px)");
   const targetScale = 1 - (totalCards - 1 - index) * 0.03;
   const { scrollYProgress } = useScroll({
     target: cardWrapRef,
@@ -981,11 +1032,14 @@ function ProjectCard({
   const scale = useTransform(scrollYProgress, [0, 1], [1, targetScale]);
 
   return (
-    <div ref={cardWrapRef} className="h-[85vh]">
+    <div
+      ref={cardWrapRef}
+      className="pb-10 md:h-[85vh] md:pb-0"
+    >
       <motion.article
-        className="stagger-group sticky rounded-[40px] border-2 border-[#D7E2EA] bg-[#0C0C0C] p-4 sm:rounded-[50px] sm:p-6 md:rounded-[60px] md:p-8"
+        className="stagger-group relative rounded-[30px] border border-[#D7E2EA]/45 bg-[#0C0C0C] p-3 sm:rounded-[50px] sm:border-2 sm:border-[#D7E2EA] sm:p-6 md:sticky md:rounded-[60px] md:p-8"
         style={{
-          scale,
+          scale: isMobile ? 1 : scale,
           top: `calc(clamp(6rem, 8vw, 8rem) + ${index * 28}px)`,
           transformOrigin: "top center",
           zIndex: index + 1,

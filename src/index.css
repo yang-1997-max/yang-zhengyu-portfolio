@@ -114,6 +114,52 @@ img {
   }
 }
 
+@media (max-width: 639px) {
+  html {
+    scroll-padding-top: 5.5rem;
+  }
+
+  .hero-portrait-stage {
+    top: calc(50% + 2.6rem);
+    width: clamp(150px, min(43vw, 23vh), 190px);
+  }
+
+  .marquee-mobile-row {
+    display: flex;
+    width: 100%;
+    gap: 0.7rem;
+    overflow-x: auto;
+    padding: 0 1.25rem 0.35rem;
+    scroll-padding-inline: 1.25rem;
+    scroll-snap-type: x proximity;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .marquee-mobile-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .marquee-mobile-card {
+    width: clamp(180px, 52vw, 220px);
+    height: clamp(112px, 32vw, 138px);
+    flex: 0 0 auto;
+    border-radius: 1rem;
+    object-fit: cover;
+    scroll-snap-align: start;
+    user-select: none;
+  }
+
+  .animated-list-scroll {
+    scroll-snap-type: x proximity;
+  }
+
+  .animated-list-scroll > button {
+    scroll-snap-align: start;
+  }
+}
+
 .opening-screen {
   position: fixed;
   inset: 0;
