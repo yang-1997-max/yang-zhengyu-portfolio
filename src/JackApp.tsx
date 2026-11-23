@@ -925,6 +925,10 @@ function ShowreelGallery({
       void video.play().catch(() => undefined);
     };
 
+    if (video.networkState === HTMLMediaElement.NETWORK_EMPTY) {
+      video.load();
+    }
+
     if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
       startPlayback();
     } else {
@@ -957,7 +961,7 @@ function ShowreelGallery({
             autoPlay
             loop
             playsInline
-            preload="metadata"
+            preload="auto"
             onVolumeChange={(event) => {
               const enabled = !event.currentTarget.muted;
               setAudioEnabled((current) =>
